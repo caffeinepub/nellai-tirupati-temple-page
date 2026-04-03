@@ -1,0 +1,444 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   FONT FACES
+   ============================================================ */
+@font-face {
+  font-family: "PlayfairDisplay";
+  src: url("/assets/fonts/PlayfairDisplay.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DMSans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================================
+   DESIGN TOKENS  –  Spiritual / Parchment theme
+   Palette mapped to OKLCH:
+     Parchment (#F6F1E7)  →  oklch(0.953 0.020 85)
+     Sage green (#E7F0E2) →  oklch(0.929 0.030 148)
+     Deep green (#2F5B45) →  oklch(0.384 0.085 155)
+     Dark olive (#2F332B) →  oklch(0.233 0.025 122)
+     Gold accent (#C7A14D)→  oklch(0.710 0.115 73)
+     Gold light (#D8B15A) →  oklch(0.757 0.120 77)
+     Warm card (#FAF7F0)  →  oklch(0.974 0.012 80)
+     Warm border(#E6D9C2)→  oklch(0.882 0.035 84)
+   ============================================================ */
+@layer base {
+  :root {
+    --radius: 0.875rem;
+
+    /* Core surface */
+    --background: 0.953 0.02 85;
+    --foreground: 0.233 0.025 122;
+
+    /* Cards */
+    --card: 0.974 0.012 80;
+    --card-foreground: 0.233 0.025 122;
+
+    /* Popover */
+    --popover: 0.974 0.012 80;
+    --popover-foreground: 0.233 0.025 122;
+
+    /* Primary = deep green */
+    --primary: 0.384 0.085 155;
+    --primary-foreground: 0.974 0.012 80;
+
+    /* Secondary = sage green */
+    --secondary: 0.929 0.03 148;
+    --secondary-foreground: 0.384 0.085 155;
+
+    /* Muted */
+    --muted: 0.929 0.03 148;
+    --muted-foreground: 0.52 0.04 140;
+
+    /* Accent = gold */
+    --accent: 0.71 0.115 73;
+    --accent-foreground: 0.974 0.012 80;
+
+    /* Destructive */
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    /* Borders / inputs */
+    --border: 0.882 0.035 84;
+    --input: 0.882 0.035 84;
+    --ring: 0.71 0.115 73;
+
+    /* Charts */
+    --chart-1: 0.384 0.085 155;
+    --chart-2: 0.71 0.115 73;
+    --chart-3: 0.64 0.095 148;
+    --chart-4: 0.757 0.12 77;
+    --chart-5: 0.5 0.08 120;
+
+    /* Sidebar (inherits theme) */
+    --sidebar: 0.929 0.03 148;
+    --sidebar-foreground: 0.233 0.025 122;
+    --sidebar-primary: 0.384 0.085 155;
+    --sidebar-primary-foreground: 0.974 0.012 80;
+    --sidebar-accent: 0.71 0.115 73;
+    --sidebar-accent-foreground: 0.974 0.012 80;
+    --sidebar-border: 0.882 0.035 84;
+    --sidebar-ring: 0.71 0.115 73;
+
+    /* Custom temple tokens */
+    --temple-gold: 0.71 0.115 73;
+    --temple-gold-light: 0.757 0.12 77;
+    --temple-green-deep: 0.384 0.085 155;
+    --temple-green-sage: 0.929 0.03 148;
+    --temple-parchment: 0.953 0.02 85;
+    --temple-warm-card: 0.974 0.012 80;
+    --temple-warm-border: 0.882 0.035 84;
+    --temple-text-dark: 0.233 0.025 122;
+    --temple-text-mid: 0.4 0.03 120;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "GeneralSans", "DMSans", system-ui, sans-serif;
+  }
+}
+
+/* ============================================================
+   SCROLL REVEAL ANIMATION
+   ============================================================ */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   GOLD ORNAMENTAL DIVIDER
+   Diamond-dot style: ── ◆ ◆ ◆ ──
+   ============================================================ */
+.gold-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin: 8px 0 24px;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+  content: "";
+  flex: 1;
+  max-width: 72px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(0.71 0.115 73 / 0.8) 50%,
+    transparent 100%
+  );
+}
+
+/* Diamond/rhombus shape for divider dots */
+.gold-divider-dot {
+  width: 7px;
+  height: 7px;
+  background: oklch(0.71 0.115 73);
+  display: inline-block;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  box-shadow: 0 0 4px oklch(0.71 0.115 73 / 0.5);
+}
+
+.gold-divider-dot:nth-child(2) {
+  width: 5px;
+  height: 5px;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   GOLD SATIN SWOOSH  (featured card accent)
+   Real diagonal satin sweep: bottom-right corner
+   ============================================================ */
+.gold-swoosh {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-swoosh::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 35%,
+    oklch(0.757 0.12 77 / 0.18) 50%,
+    oklch(0.71 0.115 73 / 0.3) 65%,
+    oklch(0.6 0.1 73 / 0.22) 80%,
+    transparent 100%
+  );
+  border-radius: 50% 50% 0 50%;
+  pointer-events: none;
+  transform: rotate(-10deg);
+}
+
+/* ============================================================
+   HERO SECTION — Mandala/Lotus CSS pattern overlay
+   ============================================================ */
+.hero-mandala-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Concentric circles + radial dots pattern using repeating-radial-gradient */
+  background-image: repeating-radial-gradient(
+      circle at 50% 50%,
+      transparent 0px,
+      transparent 38px,
+      oklch(0.71 0.115 73 / 0.04) 40px,
+      transparent 42px
+    ),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      transparent 0px,
+      transparent 78px,
+      oklch(0.71 0.115 73 / 0.03) 80px,
+      transparent 82px
+    ),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      transparent 0px,
+      transparent 118px,
+      oklch(0.71 0.115 73 / 0.025) 120px,
+      transparent 122px
+    );
+  opacity: 1;
+}
+
+/* ============================================================
+   HERO SCROLL INDICATOR BOUNCE
+   ============================================================ */
+@keyframes bounce-gentle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 1.8s ease-in-out infinite;
+}
+
+/* ============================================================
+   ALTERNATING SECTION BACKGROUNDS
+   Parchment: warm ivory with subtle mandala texture
+   Sage: clear sage green with gentle wave
+   ============================================================ */
+.section-parchment {
+  background-color: oklch(0.974 0.012 82);
+  /* Subtle concentric circle texture (temple rangoli motif) */
+  background-image: repeating-radial-gradient(
+    circle at 20% 50%,
+    transparent 0,
+    transparent 28px,
+    oklch(0.882 0.035 84 / 0.35) 30px,
+    transparent 31px
+  );
+}
+
+.section-sage {
+  background: linear-gradient(
+    180deg,
+    oklch(0.937 0.032 148) 0%,
+    oklch(0.92 0.038 148) 100%
+  );
+  /* Subtle diagonal lines as a gentle weave */
+  background-image: linear-gradient(
+      180deg,
+      oklch(0.937 0.032 148) 0%,
+      oklch(0.92 0.038 148) 100%
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0,
+      transparent 18px,
+      oklch(0.384 0.085 155 / 0.025) 19px,
+      transparent 20px
+    );
+  background-blend-mode: normal, overlay;
+}
+
+.section-deep-green {
+  background-color: oklch(var(--temple-green-deep));
+  color: oklch(var(--temple-warm-card));
+}
+
+/* ============================================================
+   TABLE OVERRIDE
+   ============================================================ */
+.seva-table thead tr {
+  background-color: oklch(var(--temple-green-deep));
+  color: oklch(var(--temple-warm-card));
+}
+
+.seva-table thead th {
+  letter-spacing: 0.08em;
+}
+
+.seva-table tbody tr:nth-child(even) {
+  background-color: oklch(0.937 0.032 148 / 0.5);
+}
+
+.seva-table tbody tr:nth-child(odd) {
+  background-color: oklch(var(--temple-warm-card));
+}
+
+.seva-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.seva-table tbody tr:hover {
+  background-color: oklch(0.71 0.115 73 / 0.06);
+}
+
+/* ============================================================
+   DEITY CARD — Gold border hover transition
+   ============================================================ */
+.deity-card {
+  transition: transform 0.2s ease, border-color 0.25s ease, box-shadow 0.25s
+    ease;
+  border: 1.5px solid oklch(0.882 0.035 84);
+}
+
+.deity-card:hover {
+  transform: translateY(-4px);
+  border-color: oklch(0.71 0.115 73 / 0.75);
+  box-shadow: 0 8px 32px -4px oklch(0.384 0.085 155 / 0.18), 0 0 0 1px
+    oklch(0.71 0.115 73 / 0.2), 0 2px 8px oklch(0.71 0.115 73 / 0.15);
+}
+
+/* ============================================================
+   SPIRITUAL SIGNIFICANCE CARD — Corner flourishes
+   Uses CSS clip + border + pseudo-elements for 4-corner ornamentation
+   ============================================================ */
+.significance-card {
+  position: relative;
+}
+
+.significance-card::before,
+.significance-card::after {
+  content: "✦";
+  position: absolute;
+  font-size: 18px;
+  color: oklch(0.71 0.115 73 / 0.6);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.significance-card::before {
+  top: 14px;
+  left: 16px;
+}
+
+.significance-card::after {
+  top: 14px;
+  right: 16px;
+}
+
+/* Bottom corners via child elements injected in JSX */
+.significance-card .corner-br {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  font-size: 18px;
+  color: oklch(0.71 0.115 73 / 0.6);
+  pointer-events: none;
+  line-height: 1;
+}
+
+.significance-card .corner-bl {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  font-size: 18px;
+  color: oklch(0.71 0.115 73 / 0.6);
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* ============================================================
+   BACK-TO-TOP — Pulsing ring animation
+   ============================================================ */
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 4px 20px oklch(0.71 0.115 73 / 0.45), 0 0 0 0
+      oklch(0.71 0.115 73 / 0.4);
+  }
+  60% {
+    box-shadow: 0 4px 20px oklch(0.71 0.115 73 / 0.45), 0 0 0 8px
+      oklch(0.71 0.115 73 / 0);
+  }
+  100% {
+    box-shadow: 0 4px 20px oklch(0.71 0.115 73 / 0.45), 0 0 0 0
+      oklch(0.71 0.115 73 / 0);
+  }
+}
+
+.back-to-top-btn {
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+
+.back-to-top-btn:hover {
+  animation: none;
+  box-shadow: 0 6px 28px oklch(0.71 0.115 73 / 0.55), 0 0 0 2px
+    oklch(0.71 0.115 73 / 0.35);
+  transform: scale(1.08);
+}
+
+.back-to-top-btn:active {
+  transform: scale(0.96);
+}
+
+/* ============================================================
+   SECTION HEADING — Gold text shadow on hover
+   ============================================================ */
+.section-heading-text {
+  transition: text-shadow 0.3s ease;
+}
+
+.section-heading-text:hover {
+  text-shadow: 0 0 20px oklch(0.71 0.115 73 / 0.25), 0 2px 8px
+    oklch(0.384 0.085 155 / 0.15);
+}
